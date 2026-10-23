@@ -1,0 +1,18 @@
+- [x] Polish home links, URL filters, mobile layout, metadata, images, copyright and not-found states; use automatic typecheck/build only.
+- [x] Add published-only anime detail and episode pages.
+- [x] Replace admin UI authentication with mock auth and counts.
+- [x] Remove Supabase Preview session brokering without changing mock admin behavior.
+- [ ] Verify the independent Supabase schema, production environment, and real authentication flow; requires access to the user's target project and a real Supabase login flow.
+- [x] Check automatic production build results after the storage change (build OK).
+- [x] Translate about/copyright; verify tests and preview build.
+- [x] Rework anime information, episode controls, and responsive episode picker.
+- [x] Verify anime detail, episode navigation, mobile picker, and build status.
+- [x] Complete episode selection, shared create/edit form, list, deletion, and API validation.
+- [x] Check episode rule validation and automatic build/typecheck results; do not run browser/UI testing.- [x] Load public store pages client-only with skeletons; episode-based "Anime Terbaru" (15) and paginated /terbaru (30/page).
+- [x] Phase 1: audit existing content APIs, callers, real authentication, and configured database columns without schema changes.
+- [ ] Phase 1: verify migrated real content reads and authorized mutations against the hosted project; blocked by unavailable authenticated access to the independent project.
+- [ ] Phase 1: verify hosted visibility, authorization and relationships; blocked by unavailable authenticated access to the independent project.
+- [x] Remove video domain allowlisting across forms, API and player; preserve safe URL validation and real storage; test save/publish and report hosted verification limits.
+- [x] Audit image upload flows; implement browser WebP optimization, preserve Storage paths and image resolution; 64 relevant tests passed, real browser transparency/conversion verified, automatic build OK.
+- [ ] Verify optimized image save/edit/read-back with a real admin account and hosted bucket access; blocked by unavailable independent-project authentication.
+- [ ] Add four persistent ad slots, admin settings, deduplicated public loading and homepage placements; verify available checks and document hosted blockers.
