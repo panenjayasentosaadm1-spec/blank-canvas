@@ -26,6 +26,8 @@ import { canonicalHead } from "@/lib/head-meta";
 import { Button } from "@/components/ui/button";
 import { UniversalPlayer } from "@/components/player/UniversalPlayer";
 import { PageSkeleton } from "@/components/PageSkeleton";
+import { EpisodeHeader } from "@/components/episode/EpisodeHeader";
+import { EpisodeComments } from "@/components/episode/EpisodeComments";
 
 export const Route = createFileRoute("/anime/$slug_/episode/$number")({
   staticData: { sitemap: true },
@@ -196,21 +198,14 @@ function EpisodePage() {
 
   return (
     <SiteLayout>
-      <div style={playerVars} className="min-w-0">
-        <h1
-          className="mb-3 truncate text-xl font-bold leading-8 tracking-normal md:text-2xl md:leading-8"
-          title={title}
-        >
-          <Link
-            to="/anime/$slug"
-            params={{ slug: anime.slug }}
-            className="hover:text-primary"
-          >
-            {anime.title}
-          </Link>{" "}
-          - {episodeLabel}
-        </h1>
-
+      <div style={playerVars} className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(18rem,3fr)]">
+        <main className="min-w-0 lg:col-start-1 lg:row-start-1">
+          <EpisodeHeader
+            animeSlug={anime.slug}
+            animeTitle={anime.title}
+            episodeLabel={episodeLabel}
+            publishedAt={episode.publishedAt}
+          />
         <Dialog
           open={open}
           onOpenChange={(value) => {
@@ -299,7 +294,7 @@ function EpisodePage() {
           </DialogPortal>
         </Dialog>
 
-        <div className="mx-auto w-full md:w-[min(100%,calc((100dvh_-_var(--ep-chrome))*16/9))]">
+        <div className="mx-auto mt-5 w-full md:w-[min(100%,calc((100dvh_-_var(--ep-chrome))*16/9))]">
           <UniversalPlayer embedUrl={episode.embedUrl} title={title} />
 
           <div
@@ -377,8 +372,9 @@ function EpisodePage() {
             currentEpisodeId={episode.id}
           />
         </div>
+        </main>
 
-        <div className="mt-3.5 border-t border-border/60 pt-3.5 md:mt-5 md:pt-5">
+        <aside className="min-w-0 border-t border-border/60 pt-4 lg:sticky lg:top-24 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-start lg:border-0 lg:pt-0">
           <AnimeInfo
             key={anime.id}
             anime={anime}
@@ -387,6 +383,10 @@ function EpisodePage() {
             heading="h2"
             variant="compact"
           />
+        </aside>
+
+        <div className="min-w-0 border-t border-border/60 pt-5 lg:col-start-1 lg:row-start-2">
+          <EpisodeComments episodeId={episode.id} />
         </div>
       </div>
     </SiteLayout>

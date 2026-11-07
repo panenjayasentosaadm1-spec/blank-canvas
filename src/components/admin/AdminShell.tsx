@@ -1,7 +1,7 @@
 import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { LayoutDashboard, Film, PlaySquare, Tags, Globe, Settings, Menu, LogOut, X, Megaphone } from "lucide-react";
+import { LayoutDashboard, Film, PlaySquare, MessageSquare, Tags, Globe, Settings, Menu, LogOut, X, Megaphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/api/auth";
 
@@ -9,6 +9,7 @@ const navigation = [
   { to: "/admin", label: "Dasbor", icon: LayoutDashboard },
   { to: "/admin/anime", label: "Anime", icon: Film },
   { to: "/admin/episode", label: "Episode", icon: PlaySquare },
+  { to: "/admin/komentar", label: "Komentar", icon: MessageSquare },
   { to: "/admin/tag", label: "Tag", icon: Tags },
   { to: "/admin/domain-embed", label: "Domain Embed", icon: Globe },
   { to: "/admin/iklan", label: "Pengelolaan Iklan", icon: Megaphone },
