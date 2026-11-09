@@ -66,6 +66,16 @@ function Loading() {
 function IframeEngine({ source, title, onError }: { source: ResolvedSource; title: string; onError: (e: PlayerError) => void }) {
   const [loading, setLoading] = useState(true);
   const isYoutube = source.kind === "youtube";
+  let isVidShared = false;
+  try {
+    const host = new URL(source.playUrl).hostname.toLowerCase();
+    isVidShared = host === "vsembed.com" || host.endsWith(".vsembed.com");
+  } catch {
+    isVidShared = false;
+  }
+  const sandbox = isYoutube || isVidShared
+    ? "allow-scripts allow-same-origin allow-presentation"
+    : "allow-scripts allow-presentation";
   return (
     <>
       {loading && <div className="absolute inset-0"><Loading /></div>}
@@ -74,7 +84,7 @@ function IframeEngine({ source, title, onError }: { source: ResolvedSource; titl
         title={title}
         loading="lazy"
         referrerPolicy={isYoutube ? "strict-origin-when-cross-origin" : "no-referrer"}
-        sandbox={isYoutube ? "allow-scripts allow-same-origin allow-presentation" : "allow-scripts allow-presentation"}
+        sandbox={sandbox}
         allow="fullscreen; encrypted-media; picture-in-picture"
         allowFullScreen
         onLoad={() => setLoading(false)}
