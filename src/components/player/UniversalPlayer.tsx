@@ -73,9 +73,12 @@ function IframeEngine({ source, title, onError }: { source: ResolvedSource; titl
   } catch {
     isVidShared = false;
   }
-  const sandbox = isYoutube || isVidShared
-    ? "allow-scripts allow-same-origin allow-presentation"
-    : "allow-scripts allow-presentation";
+  // VidShared refuses to play inside any sandboxed frame, so the attribute is omitted for it only.
+  const sandbox = isVidShared
+    ? undefined
+    : isYoutube
+      ? "allow-scripts allow-same-origin allow-presentation"
+      : "allow-scripts allow-presentation";
   return (
     <>
       {loading && <div className="absolute inset-0"><Loading /></div>}
@@ -83,9 +86,9 @@ function IframeEngine({ source, title, onError }: { source: ResolvedSource; titl
         src={source.playUrl}
         title={title}
         loading="lazy"
-        referrerPolicy={isYoutube ? "strict-origin-when-cross-origin" : "no-referrer"}
+        referrerPolicy={isYoutube || isVidShared ? "strict-origin-when-cross-origin" : "no-referrer"}
         sandbox={sandbox}
-        allow="fullscreen; encrypted-media; picture-in-picture"
+        allow={isVidShared ? "autoplay; fullscreen; encrypted-media; picture-in-picture" : "fullscreen; encrypted-media; picture-in-picture"}
         allowFullScreen
         onLoad={() => setLoading(false)}
         onError={() => onError(errText("embed-blocked"))}
